@@ -1,18 +1,18 @@
-# Module user-activation 
+# User Activation Module
 
-Provide a description of the purpose of the module and any relevant information.
+A Viam `sensor` component for user activation metadata in Viam.
 
 ## Model hunter:user-activation:sensor
 
-Provide a description of the model and any relevant information.
+This model implements the `rdk:component:sensor` API by provinf read access to activation metadata stored via attributes. It's designed to work with external systems (mobile apps, etc.) that update the configuration via API clients.
 
 ### Configuration
 The following attribute template can be used to configure this model:
 
 ```json
 {
-"attribute_1": <float>,
-"attribute_2": <string>
+"activation_date": <float>,
+"delete_flag": <string>
 }
 ```
 
@@ -22,29 +22,55 @@ The following attributes are available for this model:
 
 | Name          | Type   | Inclusion | Description                |
 |---------------|--------|-----------|----------------------------|
-| `attribute_1` | float  | Required  | Description of attribute 1 |
-| `attribute_2` | string | Optional  | Description of attribute 2 |
+| `activation_date` | string or null  | Optional  | ISO 8601 timestamp (UTC) indicating when the user first activated the device. Defaults to `null` if not set. |
+| `delete_flag` | boolean | Optional  | Flag indicating whether the account is marked for potential deletion. Defaults to `false`. |
 
 #### Example Configuration
 
+Before user activation:
+
 ```json
 {
-  "attribute_1": 1.0,
-  "attribute_2": "foo"
+  "activation_date": null,
+  "delete_flag": "false"
+}
+```
+
+After user activation:
+
+```json
+{
+  "activation_date": "2025-10-10T00:00:00Z",
+  "delete_flag": "false"
+}
+```
+
+Marked for deletion:
+
+```json
+{
+  "activation_date": "2025-10-10T00:00:00Z",
+  "delete_flag": "true"
 }
 ```
 
 ### DoCommand
 
-If your model implements DoCommand, provide an example payload of each command that is supported and the arguments that can be used. If your model does not implement DoCommand, remove this section.
+The sensor supports the following commands via the `do_command` method:
 
 #### Example DoCommand
 
 ```json
 {
-  "command_name": {
-    "arg1": "foo",
-    "arg2": 1
-  }
+  "command": "get_activation_state"
+}
+```
+
+Response:
+
+```json
+{
+  "activation_date": "2025-10-10T00:00:00Z",
+  "delete_flag": false
 }
 ```
