@@ -1,30 +1,19 @@
 {
   "$schema": "https://dl.viam.dev/module.schema.json",
   "module_id": "hunter:user-activation",
-  "visibility": "private",
-  "url": "",
-  "description": "Modular sensor component: sensor",
+  "visibility": "public",
+  "url": "https://github.com/hunter-volkman/viam-user-activation",
+  "description": "User activation metadata",
   "models": [
     {
       "api": "rdk:component:sensor",
       "model": "hunter:user-activation:sensor",
-      "short_description": "Provide a short (100 characters or less) description of this model here",
+      "short_description": "User activation metadata",
       "markdown_link": "README.md#model-hunteruser-activationsensor"
     }
   ],
   "applications": null,
   "markdown_link": "README.md",
   "entrypoint": "./run.sh",
-  "first_run": "",
-  "build": {
-    "build": "./build.sh",
-    "setup": "./setup.sh",
-    "path": "dist/archive.tar.gz",
-    "arch": [
-      "linux/amd64",
-      "linux/arm64",
-      "darwin/arm64",
-      "windows/amd64"
-    ]
-  }
+  "first_run": ""
 }
