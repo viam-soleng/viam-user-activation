@@ -11,7 +11,7 @@ The following attribute template can be used to configure this model:
 
 ```json
 {
-"activation_date": <float>,
+"activation_date": <timestamp>,
 "delete_flag": <string>
 }
 ```
