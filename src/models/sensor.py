@@ -118,8 +118,6 @@ class UserActivationSensor(Sensor, EasyResource):
         
         Supported commands:
         - get_activation_state: Returns current state
-        - set_activation_date: Sets activation date (ISO 8601, not future)
-        - set_delete_flag: Sets deletion flag (boolean)
         
         Args:
             command (Mapping[str, ValueTypes]): The command to execute
@@ -132,14 +130,6 @@ class UserActivationSensor(Sensor, EasyResource):
         if cmd == "get_activation_state":
             return self._get_activation_state()
         
-        elif cmd == "set_activation_date":
-            value = command.get("value")
-            return self._set_activation_date(value)
-        
-        elif cmd == "set_delete_flag":
-            value = command.get("value")
-            return self._set_delete_flag(value)
-        
         else:
             error_msg = f"Unknown command: {cmd}"
             self.logger.error(error_msg)
@@ -150,68 +140,6 @@ class UserActivationSensor(Sensor, EasyResource):
         self.logger.debug("Getting activation state")
         return {
             "activation_date": self.activation_date,
-            "delete_flag": self.delete_flag
-        }
-
-    def _set_activation_date(self, value: Any) -> Dict[str, Any]:
-        """Sets activation date with validation (ISO 8601, not future)."""
-        try:
-            if value is None or value == "":
-                error_msg = "activation_date value is required"
-                self.logger.error(error_msg)
-                return {"success": False, "error": error_msg}
-            
-            # Parse ISO 8601
-            date_str = str(value)
-            if date_str.endswith('Z'):
-                dt = datetime.fromisoformat(date_str.replace('Z', '+00:00'))
-            else:
-                dt = datetime.fromisoformat(date_str)
-            
-            # Require timezone
-            if dt.tzinfo is None:
-                error_msg = "activation_date must include timezone (use Z for UTC)"
-                self.logger.error(error_msg)
-                return {"success": False, "error": error_msg}
-            
-        except (ValueError, AttributeError) as e:
-            error_msg = f"Invalid ISO 8601 format: expected YYYY-MM-DDTHH:MM:SSZ"
-            self.logger.error(f"{error_msg} (error: {str(e)})")
-            return {"success": False, "error": error_msg}
-        
-        # Check not in future
-        if dt > datetime.now(timezone.utc):
-            error_msg = "Activation date cannot be in the future"
-            self.logger.error(error_msg)
-            return {"success": False, "error": error_msg}
-        
-        # Normalize to UTC with Z suffix
-        normalized = dt.astimezone(timezone.utc).isoformat().replace('+00:00', 'Z')
-        
-        old_value = self.activation_date
-        self.activation_date = normalized
-        
-        self.logger.info(f"Set activation_date: {old_value} -> {normalized}")
-        
-        return {
-            "success": True,
-            "activation_date": self.activation_date
-        }
-
-    def _set_delete_flag(self, value: Any) -> Dict[str, Any]:
-        """Sets delete flag with validation (must be boolean)."""
-        if not isinstance(value, bool):
-            error_msg = f"delete_flag must be a boolean (true/false), got {type(value).__name__}"
-            self.logger.error(error_msg)
-            return {"success": False, "error": error_msg}
-        
-        old_value = self.delete_flag
-        self.delete_flag = value
-        
-        self.logger.info(f"Set delete_flag: {old_value} -> {value}")
-        
-        return {
-            "success": True,
             "delete_flag": self.delete_flag
         }
 
