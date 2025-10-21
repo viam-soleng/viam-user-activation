@@ -12,7 +12,7 @@ The following attribute template can be used to configure this model:
 ```json
 {
 "activation_date": <timestamp>,
-"delete_flag": <string>
+"delete_flag": <boolean>
 }
 ```
 
@@ -32,7 +32,7 @@ Before user activation:
 ```json
 {
   "activation_date": null,
-  "delete_flag": "false"
+  "delete_flag": false
 }
 ```
 
@@ -41,7 +41,7 @@ After user activation:
 ```json
 {
   "activation_date": "2025-10-10T00:00:00Z",
-  "delete_flag": "false"
+  "delete_flag": false
 }
 ```
 
@@ -50,7 +50,7 @@ Marked for deletion:
 ```json
 {
   "activation_date": "2025-10-10T00:00:00Z",
-  "delete_flag": "true"
+  "delete_flag": true
 }
 ```
 
