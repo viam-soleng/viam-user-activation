@@ -1,15 +1,15 @@
 {
   "$schema": "https://dl.viam.dev/module.schema.json",
-  "module_id": "hunter:user-activation",
+  "module_id": "viam-soleng:user-activation",
   "visibility": "public",
   "url": "https://github.com/viam-soleng/viam-user-activation",
   "description": "User activation metadata",
   "models": [
     {
       "api": "rdk:component:sensor",
-      "model": "hunter:user-activation:sensor",
+      "model": "viam-soleng:user-activation:sensor",
       "short_description": "User activation metadata",
-      "markdown_link": "README.md#model-hunteruser-activationsensor"
+      "markdown_link": "README.md#model-viam-solenguser-activationsensor"
     }
   ],
   "applications": null,
