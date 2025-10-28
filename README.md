@@ -2,7 +2,7 @@
 
 A Viam `sensor` component for user activation metadata in Viam.
 
-## Model hunter:user-activation:sensor
+## Model viam-soleng:user-activation:sensor
 
 This model implements the `rdk:component:sensor` API by provinf read access to activation metadata stored via attributes. It's designed to work with external systems (mobile apps, etc.) that update the configuration via API clients.
 
