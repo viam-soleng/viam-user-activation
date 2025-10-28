@@ -12,7 +12,7 @@ from viam.utils import SensorReading, ValueTypes
 
 
 class UserActivationSensor(Sensor, EasyResource):
-    MODEL: ClassVar[Model] = Model(ModelFamily("hunter", "user-activation"), "sensor")
+    MODEL: ClassVar[Model] = Model(ModelFamily("viam-soleng", "user-activation"), "sensor")
     
     # Internal state
     activation_date: Optional[str] = None  # ISO 8601 timestamp or None
