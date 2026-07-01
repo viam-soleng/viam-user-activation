@@ -15,7 +15,8 @@
   "applications": null,
   "markdown_link": "README.md",
   "build": {
-    "build": "make module",
+    "build": "make module.tar.gz",
+    "setup": "make setup",
     "path": "module.tar.gz",
     "arch": ["linux/amd64", "linux/arm64"]
   },
